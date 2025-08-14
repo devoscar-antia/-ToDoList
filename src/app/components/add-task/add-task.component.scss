@@ -1,0 +1,350 @@
+/* ===== ESTILOS BASE DEL COMPONENTE ===== */
+
+app-add-task ion-card {
+  margin: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+app-add-task ion-card ion-card-header {
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  color: white;
+  border-radius: 12px 12px 0 0;
+  padding: 16px;
+}
+
+app-add-task ion-card ion-card-title {
+  font-weight: 600;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+app-add-task ion-card ion-card-content {
+  padding: 16px;
+}
+
+/* ===== CAMPOS DE ENTRADA ===== */
+
+app-add-task ion-card ion-item {
+  --border-radius: 8px;
+  margin-bottom: 12px;
+  --background: white;
+  --border-width: 1px;
+  --border-color: var(--ion-color-medium-tint);
+}
+
+app-add-task ion-card ion-item:last-child {
+  margin-bottom: 0;
+}
+
+app-add-task ion-card ion-item ion-label {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+app-add-task ion-card ion-item ion-input,
+app-add-task ion-card ion-item ion-textarea {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --border-radius: 8px;
+  --background: var(--ion-color-light-tint);
+  --color: var(--ion-color-dark);
+}
+
+app-add-task ion-card ion-item ion-select {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --border-radius: 8px;
+  --background: var(--ion-color-light-tint);
+  --color: var(--ion-color-dark);
+}
+
+/* ===== BOTÓN ===== */
+
+app-add-task ion-card .add-button {
+  --border-radius: 8px;
+  --box-shadow: 0 2px 8px rgba(0, 128, 0, 0.3);
+  font-weight: 600;
+  transition: all 0.2s ease;
+  width: 100%;
+  height: 48px;
+}
+
+app-add-task ion-card .add-button:hover {
+  --box-shadow: 0 4px 12px rgba(0, 128, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+app-add-task ion-card .add-button:disabled {
+  opacity: 0.5;
+  transform: none;
+}
+
+/* ===== ICONOS ===== */
+
+app-add-task ion-card ion-item ion-label app-hero-icon {
+  margin-right: 4px;
+  opacity: 0.8;
+}
+
+/* ===== CAMPOS REQUERIDOS/OPCIONALES ===== */
+
+app-add-task ion-card ion-item.required-field ion-label::after {
+  content: " *";
+  color: var(--ion-color-danger);
+  font-weight: bold;
+}
+
+app-add-task ion-card ion-item.optional-field ion-label::after {
+  content: " (opcional)";
+  color: var(--ion-color-medium);
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+  app-add-task ion-card {
+    margin: 12px;
+  }
+  
+  app-add-task ion-card ion-card-header {
+    padding: 12px;
+  }
+  
+  app-add-task ion-card ion-card-title {
+    font-size: 1.1em;
+  }
+  
+  app-add-task ion-card ion-card-content {
+    padding: 12px;
+  }
+  
+  app-add-task ion-card ion-item {
+    margin-bottom: 10px;
+  }
+  
+  app-add-task ion-card .add-button {
+    margin-top: 16px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  app-add-task ion-card {
+    margin: 8px;
+    border-radius: 8px;
+  }
+  
+  app-add-task ion-card ion-card-header {
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  app-add-task ion-card ion-card-title {
+    font-size: 1em;
+  }
+  
+  app-add-task ion-card ion-card-content {
+    padding: 10px;
+  }
+  
+  app-add-task ion-card ion-item {
+    margin-bottom: 8px;
+    --border-radius: 6px;
+  }
+  
+  app-add-task ion-card ion-item ion-label {
+    font-size: 0.9em;
+    margin-bottom: 2px;
+  }
+  
+  app-add-task ion-card ion-item ion-input,
+  app-add-task ion-card ion-item ion-textarea,
+  app-add-task ion-card ion-item ion-select {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --border-radius: 6px;
+  }
+  
+  app-add-task ion-card .add-button {
+    margin-top: 12px;
+    height: 40px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 360px) {
+  app-add-task ion-card {
+    margin: 4px;
+  }
+  
+  app-add-task ion-card ion-card-header {
+    padding: 8px;
+  }
+  
+  app-add-task ion-card ion-card-content {
+    padding: 8px;
+  }
+  
+  app-add-task ion-card ion-item {
+    margin-bottom: 6px;
+  }
+  
+  app-add-task ion-card ion-item ion-label {
+    font-size: 0.85em;
+  }
+  
+  app-add-task ion-card .add-button {
+    height: 36px;
+    font-size: 0.85em;
+  }
+}
+
+/* ===== ESTILOS ESPECÍFICOS PARA WEB ===== */
+
+@media (min-width: 769px) {
+  app-add-task ion-card {
+    margin: 24px auto;
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  app-add-task ion-card ion-card-header {
+    padding: 20px;
+  }
+  
+  app-add-task ion-card ion-card-content {
+    padding: 20px;
+  }
+  
+  app-add-task ion-card .add-button {
+    height: 52px;
+    font-size: 1.1em;
+  }
+}
+
+@media (min-width: 1201px) {
+  app-add-task ion-card {
+    max-width: 700px;
+    margin: 32px auto;
+  }
+  
+  app-add-task ion-card ion-card-header {
+    padding: 24px;
+  }
+  
+  app-add-task ion-card ion-card-content {
+    padding: 24px;
+  }
+}
+
+/* ===== SOLUCIÓN PARA MODO OSCURO ===== */
+
+@media (prefers-color-scheme: dark) {
+  app-add-task ion-card ion-item {
+    --background: white !important;
+    --border-color: #666 !important;
+  }
+  
+  app-add-task ion-card ion-item ion-input,
+  app-add-task ion-card ion-item ion-textarea,
+  app-add-task ion-card ion-item ion-select {
+    --background: white !important;
+    --color: #333 !important;
+    --placeholder-color: #666 !important;
+    --border-color: #666 !important;
+  }
+  
+  app-add-task ion-card ion-item ion-label {
+    color: #333 !important;
+  }
+}
+
+app-add-task ion-card ion-item {
+  --background: white !important;
+  --border-color: #666 !important;
+}
+
+app-add-task ion-card ion-item ion-input,
+app-add-task ion-card ion-item ion-textarea,
+app-add-task ion-card ion-item ion-select {
+  --background: white !important;
+  --color: #333 !important;
+  --placeholder-color: #666 !important;
+  --border-color: #666 !important;
+}
+
+app-add-task ion-card ion-item ion-label {
+  color: #333 !important;
+}
+
+/* ===== SOLUCIÓN DEFINITIVA PARA LABELS RECORTADOS ===== */
+
+app-add-task ion-card ion-item ion-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  line-height: 1.4 !important;
+  min-height: 24px !important;
+  padding: 4px 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 10 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--ion-color-dark) !important;
+}
+
+app-add-task ion-card ion-item ion-label[position="stacked"] {
+  min-height: 28px !important;
+  padding: 6px 0 !important;
+  margin-bottom: 8px !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+}
+
+app-add-task ion-card ion-item {
+  --min-height: 60px !important;
+  --padding-top: 8px !important;
+  --padding-bottom: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+app-add-task ion-card ion-item:has(ion-label[position="stacked"]) {
+  --min-height: 80px !important;
+  --padding-top: 12px !important;
+  --padding-bottom: 12px !important;
+}
+
+app-add-task ion-card ion-item ion-label app-hero-icon {
+  margin-right: 6px !important;
+  opacity: 1 !important;
+  width: 18px !important;
+  height: 18px !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+}
+
+app-add-task ion-card ion-item ion-input,
+app-add-task ion-card ion-item ion-textarea,
+app-add-task ion-card ion-item ion-select {
+  --padding-top: 12px !important;
+  --padding-bottom: 12px !important;
+  --min-height: 44px !important;
+  margin-top: 4px !important;
+}

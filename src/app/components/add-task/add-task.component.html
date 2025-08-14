@@ -1,0 +1,108 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      <app-hero-icon type="add" size="lg" color="white"></app-hero-icon>
+      Agregar Nueva Tarea
+    </ion-card-title>
+  </ion-card-header>
+  
+  <ion-card-content>
+    <ion-item class="required-field">
+      <ion-label position="stacked">
+        <app-hero-icon
+          type="document"
+          size="sm"
+          color="var(--ion-color-medium)"
+        ></app-hero-icon>
+        Título
+      </ion-label>
+      <ion-input
+        [(ngModel)]="title"
+        placeholder="Ingresa el título de la tarea"
+        required
+      >
+      </ion-input>
+    </ion-item>
+    
+    <ion-item class="optional-field">
+      <ion-label position="stacked">
+        <app-hero-icon
+          type="document"
+          size="sm"
+          color="var(--ion-color-medium)"
+        ></app-hero-icon>
+        Descripción
+      </ion-label>
+      <ion-textarea
+        [(ngModel)]="description"
+        placeholder="Agrega una descripción detallada"
+        rows="3"
+      >
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">
+        <app-hero-icon
+          type="flag"
+          size="sm"
+          color="var(--ion-color-medium)"
+        ></app-hero-icon>
+        Prioridad
+      </ion-label>
+      <ion-select [(ngModel)]="priority" interface="popover">
+        <ion-select-option 
+          *ngFor="let priority of priorities" 
+          [value]="priority.value"
+          [attr.data-color]="priority.color">
+          {{ priority.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">
+        <app-hero-icon
+          type="folder"
+          size="sm"
+          color="var(--ion-color-medium)"
+        ></app-hero-icon>
+        Categoría
+      </ion-label>
+      <ion-select [(ngModel)]="category" interface="popover">
+        <ion-select-option 
+          *ngFor="let cat of categories" 
+          [value]="cat.value">
+          {{ cat.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="optional-field">
+      <ion-label position="stacked">
+        <app-hero-icon
+          type="time"
+          size="sm"
+          color="var(--ion-color-medium)"
+        ></app-hero-icon>
+        Fecha de Vencimiento
+      </ion-label>
+      <ion-input
+        [(ngModel)]="dueDate"
+        type="date"
+        placeholder="Selecciona una fecha">
+      </ion-input>
+    </ion-item>
+    
+    <ion-button
+      expand="block"
+      (click)="addTask()"
+      [disabled]="!title.trim()"
+      class="add-button"
+      color="success"
+    >
+      <app-hero-icon type="add" size="md" color="white"></app-hero-icon>
+      Agregar Tarea
+    </ion-button>
+  </ion-card-content>
+</ion-card>

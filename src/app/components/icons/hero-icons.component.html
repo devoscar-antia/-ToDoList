@@ -1,0 +1,10 @@
+<svg 
+  [attr.width]="iconSize" 
+  [attr.height]="iconSize" 
+  [attr.fill]="color === 'currentColor' ? 'none' : 'currentColor'"
+  [attr.stroke]="color === 'currentColor' ? 'currentColor' : 'none'"
+  stroke-width="1.5" 
+  viewBox="0 0 24 24" 
+  class="hero-icon">
+  <path [attr.d]="iconPath"></path>
+</svg>

@@ -1,0 +1,125 @@
+<ion-card class="sync-status-card">
+  <ion-card-header>
+    <ion-card-title class="sync-title">
+      <app-hero-icon
+        type="cloud"
+        size="md"
+        color="var(--ion-color-primary)"
+      ></app-hero-icon>
+      Estado de Sincronización
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <!-- Estado de conexión -->
+    <div class="connection-status">
+      <ion-item lines="none">
+        <ion-icon
+          [name]="getConnectionStatusIcon()"
+          [color]="getConnectionStatusColor()"
+          slot="start"
+        >
+        </ion-icon>
+        <ion-label>
+          <h3>Estado de Conexión</h3>
+          <p [class]="'status-text ' + getConnectionStatusColor()">
+            {{ getConnectionStatusText() }}
+          </p>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <!-- Estado de sincronización -->
+    <div class="sync-status">
+      <ion-item lines="none">
+        <ion-icon
+          [name]="getSyncStatusIcon()"
+          [color]="getSyncStatusColor()"
+          slot="start"
+        >
+        </ion-icon>
+        <ion-label>
+          <h3>Estado de Sincronización</h3>
+          <p [class]="'status-text ' + getSyncStatusColor()">
+            {{ getProgressText() }}
+          </p>
+        </ion-label>
+      </ion-item>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div *ngIf="syncProgress.status === 'syncing'" class="progress-section">
+      <ion-progress-bar
+        [value]="getProgressPercentage() / 100"
+        [color]="getSyncStatusColor()"
+      >
+      </ion-progress-bar>
+      <p class="progress-text">{{ getProgressPercentage() }}% completado</p>
+    </div>
+
+    <!-- Estadísticas de sincronización -->
+    <div class="sync-stats">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h4>Local</h4>
+              <p class="stat-number">{{ syncStats.totalLocal }}</p>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="stat-item">
+              <h4>API</h4>
+              <p class="stat-number">{{ syncStats.totalApi }}</p>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="hasPendingSync()">
+          <ion-col size="12">
+            <div class="stat-item warning">
+              <h4>Pendientes de Sincronización</h4>
+              <p class="stat-number warning">{{ syncStats.pendingSync }}</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="sync-actions">
+      <ion-button
+        expand="block"
+        (click)="forceSync()"
+        [disabled]="!isOnline || syncProgress.status === 'syncing'"
+        color="primary"
+        class="sync-button"
+      >
+        <app-hero-icon type="refresh" size="md" color="white"> </app-hero-icon>
+        <span *ngIf="syncProgress.status === 'syncing'">Sincronizando...</span>
+        <span *ngIf="syncProgress.status !== 'syncing'">Sincronizar Ahora</span>
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        (click)="loadSyncStats()"
+        fill="outline"
+        color="medium"
+        class="refresh-stats-button"
+      >
+        <app-hero-icon type="refresh" size="sm" color="var(--ion-color-medium)">
+        </app-hero-icon>
+        Actualizar Estadísticas
+      </ion-button>
+    </div>
+
+    <!-- Información adicional -->
+    <div class="sync-info">
+      <ion-note color="medium">
+        <app-hero-icon type="info" size="sm" color="var(--ion-color-medium)">
+        </app-hero-icon>
+        <strong>Nota:</strong> La sincronización automática ocurre cada 30
+        segundos cuando hay conexión a internet.
+      </ion-note>
+    </div>
+  </ion-card-content>
+</ion-card>

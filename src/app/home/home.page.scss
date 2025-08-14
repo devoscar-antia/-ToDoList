@@ -1,0 +1,133 @@
+/* ===== LAYOUT PRINCIPAL ===== */
+
+ion-content .container {
+  padding: 16px !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: block !important;
+}
+
+ion-content .container > * {
+  margin-bottom: 24px !important;
+}
+
+ion-content .container > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+  ion-content .container {
+    padding: 12px !important;
+    max-width: 100% !important;
+  }
+  
+  ion-content .container > * {
+    margin-bottom: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  ion-content .container {
+    padding: 8px !important;
+  }
+  
+  ion-content .container > * {
+    margin-bottom: 16px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  ion-content .container {
+    padding: 4px !important;
+  }
+  
+  ion-content .container > * {
+    margin-bottom: 12px !important;
+  }
+}
+
+/* ===== ESTILOS PARA WEB ===== */
+
+@media (min-width: 769px) {
+  ion-content .container {
+    max-width: 700px !important;
+    padding: 24px !important;
+  }
+}
+
+@media (min-width: 1201px) {
+  ion-content .container {
+    max-width: 800px !important;
+    padding: 32px !important;
+  }
+}
+
+/* ===== HEADER ===== */
+
+ion-header ion-toolbar {
+  --background: var(--ion-color-primary) !important;
+  --color: white !important;
+}
+
+ion-header ion-toolbar ion-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-weight: 600 !important;
+}
+
+ion-header ion-toolbar ion-title app-hero-icon {
+  margin-right: 4px !important;
+}
+
+/* ===== CONTENIDO ===== */
+
+ion-content {
+  --background: var(--ion-color-light) !important;
+}
+
+ion-content ion-header[collapse="condense"] ion-toolbar {
+  --background: var(--ion-color-primary) !important;
+  --color: white !important;
+}
+
+ion-content ion-header[collapse="condense"] ion-toolbar ion-title[size="large"] {
+  font-weight: 600 !important;
+}
+
+/* ===== COMPONENTES ===== */
+
+ion-content app-add-task,
+ion-content app-task-list {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* ===== OVERRIDE DE ESTILOS IONIC ===== */
+
+@media (min-width: 769px) {
+  ion-content app-add-task ion-card,
+  ion-content app-task-list .task-item,
+  ion-content app-task-list .edit-mode {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+/* ===== UTILIDADES ===== */
+
+.center-container {
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+
+.max-width-container {
+  max-width: 100% !important;
+  width: 100% !important;
+}

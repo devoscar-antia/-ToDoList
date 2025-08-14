@@ -1,0 +1,25 @@
+.hero-icon {
+  display: inline-block;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+// Estilos específicos para diferentes tamaños
+.hero-icon[size="sm"] {
+  width: 16px;
+  height: 16px;
+}
+
+.hero-icon[size="md"] {
+  width: 20px;
+  height: 20px;
+}
+
+.hero-icon[size="lg"] {
+  width: 24px;
+  height: 24px;
+}

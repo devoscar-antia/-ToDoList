@@ -1,0 +1,326 @@
+<!-- Indicador de carga -->
+<div *ngIf="isLoading" class="ion-text-center ion-padding">
+  <ion-spinner name="crescent"></ion-spinner>
+  <p>{{ "tasks.loadingTasks" | translate }}</p>
+</div>
+
+<!-- Indicador de error -->
+<div *ngIf="error && !isLoading" class="ion-text-center ion-padding">
+  <ion-note color="danger">
+    <app-hero-icon
+      type="info"
+      size="md"
+      color="var(--ion-color-danger)"
+    ></app-hero-icon>
+    {{ "common.error" | translate }}: {{ error }}
+  </ion-note>
+</div>
+
+<!-- Lista de tareas -->
+<ion-list *ngIf="!isLoading && tasks.length > 0">
+  <ion-item-sliding *ngFor="let task of tasks; trackBy: trackByTaskId">
+    <!-- Contenido principal de la tarea -->
+    <ion-item
+      [class.completed-task]="task.completed"
+      [class.overdue-task]="isOverdue(task)"
+      [class.deleting-task]="deletingTasks.has(task.id)"
+      class="task-item"
+    >
+      <!-- Checkbox para marcar como completada -->
+      <ion-checkbox
+        [checked]="task.completed"
+        (ionChange)="toggleComplete(task)"
+        slot="start"
+        class="complete-checkbox"
+      >
+      </ion-checkbox>
+
+      <!-- Contenido de la tarea -->
+      <ion-label>
+        <div class="task-header">
+          <h2 [class.completed-text]="task.completed">{{ task.title }}</h2>
+
+          <!-- Badges de prioridad y categoría -->
+          <div class="task-meta">
+            <ion-badge
+              [color]="getPriorityColor(task.priority)"
+              class="priority-badge"
+              [class.priority-high]="task.priority === 'high'"
+              [class.priority-medium]="task.priority === 'medium'"
+              [class.priority-low]="task.priority === 'low'"
+            >
+              {{ getPriorityLabel(task.priority) }}
+            </ion-badge>
+
+            <ion-badge color="medium" class="category-badge">
+              {{ getCategoryLabel(task.category) }}
+            </ion-badge>
+
+            <!-- Badge de fecha de vencimiento -->
+            <ion-badge
+              *ngIf="task.dueDate"
+              [color]="isOverdue(task) ? 'danger' : 'primary'"
+              class="due-date-badge"
+            >
+              <app-hero-icon
+                type="time"
+                size="sm"
+                color="white"
+              ></app-hero-icon>
+              {{ task.dueDate | spanishDate : "short" }}
+              <span class="due-date-text">
+                {{ getDueDateText(task) }}
+              </span>
+            </ion-badge>
+
+            <!-- Badge de eliminación en progreso -->
+            <ion-badge
+              *ngIf="deletingTasks.has(task.id)"
+              color="danger"
+              class="deleting-badge"
+            >
+              <app-hero-icon
+                type="delete"
+                size="sm"
+                color="white"
+              ></app-hero-icon>
+              Eliminando...
+            </ion-badge>
+          </div>
+        </div>
+
+        <!-- Descripción -->
+        <p
+          *ngIf="task.description"
+          [class.completed-text]="task.completed"
+          class="task-description"
+        >
+          {{ task.description }}
+        </p>
+
+        <!-- Fechas -->
+        <div class="task-dates">
+          <p class="task-date">
+            <app-hero-icon
+              type="time"
+              size="sm"
+              color="var(--ion-color-medium)"
+            ></app-hero-icon>
+            <small
+              >{{ "tasks.createdAt" | translate }}:
+              {{ task.createdAt | spanishDateTime : "short" }}</small
+            >
+          </p>
+          <p *ngIf="task.updatedAt !== task.createdAt" class="task-date">
+            <app-hero-icon
+              type="time"
+              size="sm"
+              color="var(--ion-color-medium)"
+            ></app-hero-icon>
+            <small
+              >{{ "tasks.updatedAt" | translate }}:
+              {{ task.updatedAt | spanishDateTime : "short" }}</small
+            >
+          </p>
+        </div>
+      </ion-label>
+
+      <!-- Botón de editar -->
+      <ion-button
+        fill="clear"
+        size="small"
+        (click)="startEdit(task)"
+        class="edit-button"
+        title="Editar tarea"
+      >
+        <app-hero-icon
+          type="edit"
+          size="md"
+          color="var(--ion-color-primary)"
+        ></app-hero-icon>
+        <ion-badge
+          *ngIf="hasUnsavedChanges() && editingTask?.id === task.id"
+          color="warning"
+          class="unsaved-changes-badge"
+        >
+          Cambios sin guardar
+        </ion-badge>
+      </ion-button>
+    </ion-item>
+
+    <!-- Opciones de deslizamiento -->
+    <ion-item-options side="end">
+      <ion-item-option color="danger" (click)="deleteTask(task)">
+        <app-hero-icon type="delete" size="md" color="white"></app-hero-icon>
+        Eliminar
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+
+<!-- Mensaje cuando no hay tareas -->
+<div *ngIf="!isLoading && tasks.length === 0" class="no-tasks-message">
+  <ion-icon name="list-outline"></ion-icon>
+  <h3>No hay tareas aún</h3>
+  <p>¡Agrega tu primera tarea para comenzar a organizarte!</p>
+</div>
+
+<!-- Modo de edición -->
+<div *ngIf="editingTask" class="edit-mode">
+  <ion-card class="edit-card">
+    <ion-card-header>
+      <ion-card-title>
+        <app-hero-icon
+          type="edit"
+          size="md"
+          color="var(--ion-color-primary)"
+        ></app-hero-icon>
+        Editando: {{ editingTask.title }}
+        <ion-badge
+          *ngIf="hasUnsavedChanges()"
+          color="warning"
+          class="changes-indicator"
+        >
+          Cambios sin guardar
+        </ion-badge>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Título -->
+      <ion-item class="required-field">
+        <ion-label position="stacked">
+          <app-hero-icon
+            type="document"
+            size="sm"
+            color="var(--ion-color-medium)"
+          ></app-hero-icon>
+          Título de la tarea
+        </ion-label>
+        <ion-input
+          [(ngModel)]="editingTask.title"
+          placeholder="Título de la tarea"
+          (keypress)="onTitleKeyPress($event)"
+          required
+        >
+        </ion-input>
+      </ion-item>
+
+      <!-- Descripción -->
+      <ion-item class="optional-field">
+        <ion-label position="stacked">
+          <app-hero-icon
+            type="document"
+            size="sm"
+            color="var(--ion-color-medium)"
+          ></app-hero-icon>
+          Descripción
+        </ion-label>
+        <ion-textarea
+          [(ngModel)]="editingTask.description"
+          placeholder="Descripción de la tarea"
+          rows="3"
+        >
+        </ion-textarea>
+      </ion-item>
+
+      <!-- Prioridad -->
+      <ion-item>
+        <ion-label position="stacked">
+          <app-hero-icon
+            type="flag"
+            size="sm"
+            color="var(--ion-color-medium)"
+          ></app-hero-icon>
+          Prioridad
+        </ion-label>
+        <ion-select [(ngModel)]="editingTask.priority" interface="popover">
+          <ion-select-option value="high">Alta</ion-select-option>
+          <ion-select-option value="medium">Media</ion-select-option>
+          <ion-select-option value="low">Baja</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Categoría -->
+      <ion-item>
+        <ion-label position="stacked">
+          <app-hero-icon
+            type="folder"
+            size="sm"
+            color="var(--ion-color-medium)"
+          ></app-hero-icon>
+          Categoría
+        </ion-label>
+        <ion-select [(ngModel)]="editingTask.category" interface="popover">
+          <ion-select-option value="general">General</ion-select-option>
+          <ion-select-option value="work">Trabajo</ion-select-option>
+          <ion-select-option value="personal">Personal</ion-select-option>
+          <ion-select-option value="study">Estudio</ion-select-option>
+          <ion-select-option value="health">Salud</ion-select-option>
+          <ion-select-option value="shopping">Compras</ion-select-option>
+          <ion-select-option value="home">Hogar</ion-select-option>
+          <ion-select-option value="finance">Finanzas</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Fecha de vencimiento -->
+      <ion-item class="optional-field">
+        <ion-label position="stacked">
+          <app-hero-icon
+            type="time"
+            size="sm"
+            color="var(--ion-color-medium)"
+          ></app-hero-icon>
+          Fecha de Vencimiento
+        </ion-label>
+        <ion-input
+          [(ngModel)]="editingTask.dueDate"
+          type="date"
+          placeholder="Selecciona una fecha"
+        >
+        </ion-input>
+      </ion-item>
+
+      <!-- Mensaje de ayuda -->
+      <div class="edit-help">
+        <ion-note color="medium">
+          <app-hero-icon
+            type="info"
+            size="sm"
+            color="var(--ion-color-medium)"
+          ></app-hero-icon>
+          <strong>Consejo:</strong> Presiona Enter en el título para guardar
+          rápidamente
+        </ion-note>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="edit-actions">
+        <ion-button
+          expand="block"
+          (click)="saveTask()"
+          [disabled]="!editingTask.title.trim()"
+          class="save-button"
+          color="success"
+        >
+          <app-hero-icon type="check" size="md" color="white"></app-hero-icon>
+          Guardar Cambios
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          (click)="cancelEdit()"
+          class="cancel-button"
+          color="medium"
+        >
+          <app-hero-icon
+            type="close"
+            size="md"
+            color="var(--ion-color-medium)"
+          ></app-hero-icon>
+          Cancelar
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>
