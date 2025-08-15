@@ -1,7 +1,122 @@
+/* ===== SOLUCIÓN ESPECÍFICA PARA TEXTO DE ESTADO NO DESEADO ===== */
+
+/* Ocultar solo pseudo-elementos que puedan contener texto no deseado */
+.task-item::before,
+.task-item::after,
+.task-header::before,
+.task-header::after,
+ion-label::before,
+ion-label::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Ocultar solo elementos con texto específico problemático */
+.task-item *[class*="status-text"],
+.task-item *[class*="state-text"],
+.task-item *[class*="notification"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Asegurar que no haya texto superpuesto */
+.task-item * {
+  position: relative !important;
+  z-index: auto !important;
+}
+
+/* Forzar que el título de la tarea esté siempre visible */
+.task-header h2 {
+  position: relative !important;
+  z-index: 10 !important;
+  background: transparent !important;
+}
+
+/* ===== ESTILOS PARA TOASTS ===== */
+
+/* Toast de éxito personalizado - SOLO el toast, no toda la pantalla */
+ion-toast[color="success"] {
+  --background: #2dd36f !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(0, 128, 0, 0.4) !important;
+  z-index: 1000 !important;
+}
+
+/* Toast de éxito mejorado */
+.success-toast {
+  --background: #2dd36f !important; /* verde */
+  --color: #ffffff !important;      /* texto blanco */
+  --border-radius: 20px !important;
+  --box-shadow: 0 10px 24px rgba(45, 211, 111, 0.35) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+  padding: 8px 14px !important;
+}
+
+/* Botón del toast en blanco con texto verde para buen contraste */
+.success-toast .toast-button {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* Forzar alto mínimo y centrado del contenido */
+.success-toast .toast-wrapper {
+  min-height: 44px !important;
+}
+
+/* Estilo chip pegado al fondo con separación del safe area */
+.bottom-chip {
+  margin-bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
+}
+
+/* Toast de error personalizado - SOLO el toast, no toda la pantalla */
+ion-toast[color="danger"] {
+  --background: #eb445a !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(235, 68, 90, 0.4) !important;
+  z-index: 1000 !important;
+}
+
+/* Toast de advertencia personalizado - SOLO el toast, no toda la pantalla */
+ion-toast[color="warning"] {
+  --background: #ffc409 !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(255, 196, 9, 0.4) !important;
+  z-index: 1000 !important;
+}
+
+/* Toast primario personalizado - SOLO el toast, no toda la pantalla */
+ion-toast[color="primary"] {
+  --background: #3880ff !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(56, 128, 255, 0.4) !important;
+  z-index: 1000 !important;
+}
+
+/* Responsivo para cualquier toast */
+ion-toast {
+  --max-width: 92vw !important;
+  font-size: 0.95rem !important;
+}
+
+@media (max-width: 360px) {
+  ion-toast {
+    --max-width: 96vw !important;
+    font-size: 0.9rem !important;
+  }
+}
+
 /* ===== ESTILOS BASE PARA TAREAS ===== */
 
 .task-item {
-  margin-bottom: 12px;
+  margin: 8px 8px 16px 8px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -81,10 +196,12 @@
 .task-header h2 {
   margin: 0;
   flex: 1;
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 1.5em !important; /* Aumentado de 1.3em a 1.5em */
+  font-weight: 800 !important; /* Aumentado de 700 a 800 */
   color: var(--ion-color-dark);
   line-height: 1.3;
+  letter-spacing: 0.4px !important; /* Aumentado de 0.2px a 0.4px */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* ===== BADGES ===== */
@@ -125,29 +242,57 @@
 }
 
 .priority-high {
-  background-color: var(--ion-color-danger);
-  color: white;
+  background-color: var(--ion-color-danger) !important;
+  color: white !important;
+  --background: var(--ion-color-danger) !important;
+  --color: white !important;
 }
 
 .priority-medium {
-  background-color: var(--ion-color-warning);
-  color: white;
+  background-color: var(--ion-color-warning) !important;
+  color: white !important;
+  --background: var(--ion-color-warning) !important;
+  --color: white !important;
 }
 
 .priority-low {
-  background-color: var(--ion-color-success);
-  color: white;
+  background-color: var(--ion-color-success) !important;
+  color: white !important;
+  --background: var(--ion-color-success) !important;
+  --color: white !important;
+}
+
+.category-badge {
+  background-color: var(--ion-color-medium) !important;
+  color: white !important;
+  --background: var(--ion-color-medium) !important;
+  --color: white !important;
+}
+
+.due-date-badge {
+  background-color: var(--ion-color-primary) !important;
+  color: white !important;
+  --background: var(--ion-color-primary) !important;
+  --color: white !important;
+}
+
+.deleting-badge {
+  background-color: var(--ion-color-danger) !important;
+  color: white !important;
+  --background: var(--ion-color-danger) !important;
+  --color: white !important;
+}
+
+.unsaved-changes-badge {
+  background-color: var(--ion-color-warning) !important;
+  color: white !important;
+  --background: var(--ion-color-warning) !important;
+  --color: white !important;
 }
 
 .due-date-text {
   margin-left: 4px;
   font-size: 0.8em;
-}
-
-.unsaved-changes-badge {
-  font-size: 0.7em;
-  padding: 2px 6px;
-  margin-left: 8px;
 }
 
 /* ===== FECHAS ===== */
@@ -169,38 +314,83 @@
   opacity: 0.7;
 }
 
+/* ===== BOTONES DE ACCIÓN ===== */
+
+.delete-button {
+  --background: #eb445a !important;
+  --color: white !important;
+  --border-color: #cf3c4f !important;
+  background-color: #eb445a !important;
+  color: white !important;
+  border-color: #cf3c4f !important;
+}
+
+.delete-button:hover {
+  --background: #cf3c4f !important;
+  background-color: #cf3c4f !important;
+}
+
+ion-item-option[color="danger"] {
+  --background: #eb445a !important;
+  --color: white !important;
+  background-color: #eb445a !important;
+  color: white !important;
+}
+
 /* ===== BOTONES ===== */
 
 .edit-button {
-  --padding-start: 8px;
-  --padding-end: 8px;
-  height: 32px;
-  margin: 0;
+  --padding-start: 0 !important;
+  --padding-end: 0 !important;
+  height: 32px !important;
+  width: 32px !important;
+  min-width: 32px !important;
+  margin: 0 6px 0 auto !important;
+  --background: #3880ff !important;
+  --color: white !important;
+  --border-color: #3171e0 !important;
+  background-color: #3880ff !important;
+  color: white !important;
+  border-color: #3171e0 !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .edit-button app-hero-icon {
-  margin-right: 4px;
+  margin: 0 !important;
+  width: 18px !important;
+  height: 18px !important;
 }
 
 /* ===== MENSAJE SIN TAREAS ===== */
 
 .no-tasks-message {
   text-align: center;
-  padding: 40px 20px;
+  padding: 0 12px 12px 12px;
   color: var(--ion-color-medium);
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  position: relative !important;
+  top: 0 !important;
 }
 
 .no-tasks-message ion-icon {
-  font-size: 4em;
-  margin-bottom: 16px;
-  opacity: 0.5;
+  display: none !important; /* Ocultar icono para evitar espacio vacio */
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  opacity: 0 !important;
 }
 
 .no-tasks-message h3 {
-  margin: 0 0 8px 0;
-  font-size: 1.2em;
-  font-weight: 600;
+  margin: 0 0 6px 0;
+  font-size: 1.6em !important;
+  font-weight: 800 !important;
   color: var(--ion-color-dark);
+  letter-spacing: 0.5px !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
 .no-tasks-message p {
@@ -212,13 +402,14 @@
 /* ===== MODO EDICIÓN ===== */
 
 .edit-mode {
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .edit-card {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  margin-bottom: 16px;
 }
 
 .edit-card ion-card-header {
@@ -230,10 +421,12 @@
 .edit-card ion-card-title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 1.1em;
+  gap: 12px; /* Aumentado de 8px a 12px */
+  font-weight: 800 !important; /* Aumentado de 700 a 800 */
+  font-size: 1.6em !important; /* Aumentado de 1.3em a 1.6em */
   margin: 0;
+  letter-spacing: 0.5px !important; /* Aumentado de 0.3px a 0.5px */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 
 .changes-indicator {
@@ -274,12 +467,116 @@
   font-weight: 600;
 }
 
-.save-button {
-  --box-shadow: 0 2px 8px rgba(0, 128, 0, 0.3);
+.save-button,
+.edit-actions ion-button.save-button {
+  --box-shadow: 0 4px 16px rgba(0, 128, 0, 0.4) !important;
+  --background: #2dd36f !important;
+  --color: white !important;
+  --border-color: #28ba62 !important;
+  --border-radius: 50px !important;
+  --background-activated: #28ba62 !important;
+  --background-focused: #28ba62 !important;
+  --background-hover: #28ba62 !important;
+  --color-activated: white !important;
+  --color-focused: white !important;
+  --color-hover: white !important;
+  background-color: #2dd36f !important;
+  color: white !important;
+  border-color: #28ba62 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  height: 56px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  margin-bottom: 16px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  outline: none !important;
 }
 
-.cancel-button {
-  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.save-button:hover,
+.edit-actions ion-button.save-button:hover {
+  --box-shadow: 0 6px 20px rgba(0, 128, 0, 0.5) !important;
+  transform: translateY(-2px) !important;
+  scale: 1.02 !important;
+}
+
+.cancel-button,
+.edit-actions ion-button.cancel-button {
+  --box-shadow: 0 4px 16px rgba(255, 105, 180, 0.4) !important;
+  --background: #ff69b4 !important;
+  --color: white !important;
+  --border-color: #ff1493 !important;
+  --border-radius: 50px !important;
+  --background-activated: #ff1493 !important;
+  --background-focused: #ff1493 !important;
+  --background-hover: #ff1493 !important;
+  --color-activated: white !important;
+  --color-focused: white !important;
+  --color-hover: white !important;
+  background-color: #ff69b4 !important;
+  color: white !important;
+  border-color: #ff1493 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  height: 56px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.cancel-button:hover,
+.edit-actions ion-button.cancel-button:hover {
+  --box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5) !important;
+  transform: translateY(-2px) !important;
+  scale: 1.02 !important;
+}
+
+.edit-button,
+ion-button.edit-button {
+  --padding-start: 12px !important;
+  --padding-end: 12px !important;
+  height: 36px !important;
+  margin: 0 !important;
+  --background: #3880ff !important;
+  --color: white !important;
+  --border-color: #3171e0 !important;
+  --border-radius: 18px !important;
+  --background-activated: #3171e0 !important;
+  --background-focused: #3171e0 !important;
+  --background-hover: #3171e0 !important;
+  --color-activated: white !important;
+  --color-focused: white !important;
+  --color-hover: white !important;
+  background-color: #3880ff !important;
+  color: white !important;
+  border-color: #3171e0 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  font-weight: 600 !important;
+  border-radius: 18px !important;
+}
+
+.edit-button:hover,
+ion-button.edit-button:hover {
+  --box-shadow: 0 4px 12px rgba(56, 128, 255, 0.4) !important;
+  transform: translateY(-1px) !important;
+  scale: 1.05 !important;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -337,6 +634,105 @@
   
   .edit-actions ion-button {
     height: 44px;
+  }
+}
+
+/* ===== RESPONSIVE PARA MÓVILES ===== */
+
+@media (max-width: 480px) {
+  .task-item {
+    margin-bottom: 10px !important;
+    position: relative !important; /* para ubicar el botón sin tapar texto */
+  }
+  
+  .task-header h2 {
+    font-size: 1.1em !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  
+  .task-description {
+    font-size: 0.9em !important;
+    line-height: 1.4 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Evitar que el botón de editar tape el contenido */
+  .task-item ion-label {
+    display: block !important;
+    padding-right: 56px !important; /* espacio para el botón */
+  }
+
+  .edit-button {
+    width: 30px !important;
+    min-width: 30px !important;
+    height: 30px !important;
+    position: absolute !important;
+    right: 8px !important;
+    top: 10px !important;
+    z-index: 2 !important;
+  }
+  
+  .task-meta {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+  
+  .priority-badge,
+  .category-badge,
+  .due-date-badge {
+    font-size: 0.75em !important;
+    padding: 4px 6px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 80px !important;
+  }
+  
+  .due-date-badge {
+    max-width: 120px !important;
+  }
+  
+  .task-dates {
+    font-size: 0.8em !important;
+  }
+  
+  .task-date small {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .task-header h2 {
+    font-size: 1em !important;
+  }
+  
+  .task-description {
+    font-size: 0.85em !important;
+  }
+  
+  .priority-badge,
+  .category-badge,
+  .due-date-badge {
+    font-size: 0.7em !important;
+    padding: 3px 5px !important;
+    max-width: 70px !important;
+  }
+  
+  .due-date-badge {
+    max-width: 100px !important;
+  }
+
+  /* Botón editar aún más compacto en pantallas muy pequeñas */
+  .edit-button {
+    width: 28px !important;
+    min-width: 28px !important;
+    height: 28px !important;
   }
 }
 
@@ -473,4 +869,37 @@ ion-item:has(ion-label[position="stacked"]) {
   --min-height: 80px !important;
   --padding-top: 12px !important;
   --padding-bottom: 12px !important;
+}
+
+/* ===== ALERTA DE ESTADO ===== */
+
+.status-alert {
+  --background: #2dd36f !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(0, 128, 0, 0.4) !important;
+}
+
+.status-alert .alert-wrapper {
+  border-radius: 25px !important;
+  background: #2dd36f !important;
+  color: white !important;
+}
+
+.status-alert .alert-head {
+  background: #28ba62 !important;
+  color: white !important;
+  border-radius: 25px 25px 0 0 !important;
+}
+
+.status-alert .alert-message {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.status-alert .alert-button {
+  color: white !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
 }

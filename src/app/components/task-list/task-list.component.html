@@ -131,6 +131,7 @@
         size="small"
         (click)="startEdit(task)"
         class="edit-button"
+        slot="end"
         title="Editar tarea"
       >
         <app-hero-icon
@@ -157,13 +158,6 @@
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>
-
-<!-- Mensaje cuando no hay tareas -->
-<div *ngIf="!isLoading && tasks.length === 0" class="no-tasks-message">
-  <ion-icon name="list-outline"></ion-icon>
-  <h3>No hay tareas aún</h3>
-  <p>¡Agrega tu primera tarea para comenzar a organizarte!</p>
-</div>
 
 <!-- Modo de edición -->
 <div *ngIf="editingTask" class="edit-mode">

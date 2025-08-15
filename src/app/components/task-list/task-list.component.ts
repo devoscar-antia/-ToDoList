@@ -101,14 +101,16 @@ export class TaskListComponent implements OnInit {
     // Remover del set de tareas eliminándose
     this.deletingTasks.delete(task.id);
 
-    // Mostrar mensaje de confirmación
-    this.showToast('Tarea eliminada exitosamente', 'success');
+    // Mostrar mensaje de confirmación igual que "tarea pendiente" (alerta estado)
+    await this.showStatusAlert('Tarea eliminada exitosamente');
   }
 
   toggleComplete(task: Task): void {
     this.taskService.toggleTaskComplete(task.id);
     const status = task.completed ? 'marcada como pendiente' : 'marcada como completada';
-    this.showToast(`Tarea ${status}`, 'success');
+
+    // Mostrar como alerta en lugar de toast para evitar superposición
+    this.showStatusAlert(`Tarea ${status}`);
   }
 
   onTitleKeyPress(event: KeyboardEvent): void {
@@ -178,14 +180,42 @@ export class TaskListComponent implements OnInit {
     await alert.present();
   }
 
-  private async showToast(message: string, color: string = 'primary'): Promise<void> {
+  private async showToast(
+    message: string,
+    color: string = 'primary',
+    cssClass?: string,
+    icon?: string,
+    position: 'top' | 'middle' | 'bottom' = 'bottom',
+    withButton: boolean = false,
+    durationMs: number = 2000
+  ): Promise<void> {
     const toast = await this.toastController.create({
       message,
-      duration: 2000,
+      duration: durationMs,
       color,
-      position: 'bottom'
+      position,
+      icon,
+      cssClass,
+      buttons: withButton
+        ? [
+          {
+            text: 'OK',
+            role: 'cancel'
+          }
+        ]
+        : undefined
     });
     await toast.present();
+  }
+
+  private async showStatusAlert(message: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Estado de la tarea',
+      message: message,
+      buttons: ['OK'],
+      cssClass: 'status-alert'
+    });
+    await alert.present();
   }
 
   getPriorityColor(priority: string): string {

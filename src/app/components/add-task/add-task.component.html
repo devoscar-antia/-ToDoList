@@ -5,7 +5,7 @@
       Agregar Nueva Tarea
     </ion-card-title>
   </ion-card-header>
-  
+
   <ion-card-content>
     <ion-item class="required-field">
       <ion-label position="stacked">
@@ -23,7 +23,7 @@
       >
       </ion-input>
     </ion-item>
-    
+
     <ion-item class="optional-field">
       <ion-label position="stacked">
         <app-hero-icon
@@ -36,7 +36,8 @@
       <ion-textarea
         [(ngModel)]="description"
         placeholder="Agrega una descripción detallada"
-        rows="3"
+        rows="2"
+        [autoGrow]="false"
       >
       </ion-textarea>
     </ion-item>
@@ -51,10 +52,11 @@
         Prioridad
       </ion-label>
       <ion-select [(ngModel)]="priority" interface="popover">
-        <ion-select-option 
-          *ngFor="let priority of priorities" 
+        <ion-select-option
+          *ngFor="let priority of priorities"
           [value]="priority.value"
-          [attr.data-color]="priority.color">
+          [attr.data-color]="priority.color"
+        >
           {{ priority.label }}
         </ion-select-option>
       </ion-select>
@@ -70,9 +72,7 @@
         Categoría
       </ion-label>
       <ion-select [(ngModel)]="category" interface="popover">
-        <ion-select-option 
-          *ngFor="let cat of categories" 
-          [value]="cat.value">
+        <ion-select-option *ngFor="let cat of categories" [value]="cat.value">
           {{ cat.label }}
         </ion-select-option>
       </ion-select>
@@ -87,13 +87,14 @@
         ></app-hero-icon>
         Fecha de Vencimiento
       </ion-label>
-      <ion-input
+      <input
         [(ngModel)]="dueDate"
         type="date"
-        placeholder="Selecciona una fecha">
-      </ion-input>
+        placeholder="Selecciona una fecha"
+        class="native-date-input"
+      />
     </ion-item>
-    
+
     <ion-button
       expand="block"
       (click)="addTask()"

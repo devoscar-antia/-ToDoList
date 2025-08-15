@@ -1,3 +1,66 @@
+/* ===== SOLUCIÓN GLOBAL ESPECÍFICA PARA TEXTO SUPERPUESTO ===== */
+
+/* Ocultar solo pseudo-elementos que puedan contener texto no deseado */
+.task-item::before,
+.task-item::after,
+.task-header::before,
+.task-header::after,
+ion-label::before,
+ion-label::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Ocultar solo elementos con texto específico problemático */
+.task-item *[class*="status-text"],
+.task-item *[class*="state-text"],
+.task-item *[class*="notification"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Asegurar que no haya texto superpuesto en las tareas */
+.task-item * {
+  position: relative !important;
+  z-index: auto !important;
+}
+
+/* Forzar que el título de la tarea esté siempre visible */
+.task-header h2 {
+  position: relative !important;
+  z-index: 10 !important;
+  background: transparent !important;
+}
+
+
+
+/* ===== ESTILOS GLOBALES SIMPLES ===== */
+
+/* Ajustes para dispositivos con notch / barra inferior (iOS Safari) */
+ion-content {
+  --padding-bottom: max(20px, calc(env(safe-area-inset-bottom) + 24px)) !important;
+  scroll-padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 96px)) !important;
+}
+
+/* Forzar visibilidad del ícono del calendario en todos los campos de fecha - ESTILOS ULTRA AGRESIVOS */
+ion-input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  all: revert !important;
+}
+
+ion-input[type="date"]::-moz-calendar-picker-indicator,
+input[type="date"]::-moz-calendar-picker-indicator {
+  all: revert !important;
+}
+
+ion-input[type="date"]::-ms-clear,
+ion-input[type="date"]::-ms-expand,
+input[type="date"]::-ms-clear,
+input[type="date"]::-ms-expand {
+  all: revert !important;
+}
+
 /* ===== VARIABLES CSS PERSONALIZADAS ===== */
 
 :root {
@@ -189,6 +252,167 @@ ion-select::part(placeholder) {
   color: #666 !important;
 }
 
+/* ===== ESTILOS DE DEPURACIÓN ===== */
+
+/* Forzar que todos los botones sean visibles */
+ion-button {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+}
+
+/* Asegurar que los botones tengan dimensiones */
+ion-button[expand="block"] {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 48px !important;
+}
+
+/* ===== ESTILOS PERSONALIZADOS PARA TOASTS ===== */
+
+/* Toast de éxito (verde) - SOLO el toast, no toda la pantalla */
+ion-toast[color="success"] {
+  --background: #2dd36f !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(0, 128, 0, 0.4) !important;
+  z-index: 1000 !important;
+}
+
+/* Toast de error (rojo) - SOLO el toast, no toda la pantalla */
+ion-toast[color="danger"] {
+  --background: #eb445a !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(235, 68, 90, 0.4) !important;
+  z-index: 1000 !important;
+}
+
+/* Toast de advertencia (amarillo) - SOLO el toast, no toda la pantalla */
+ion-toast[color="warning"] {
+  --background: #ffc409 !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(255, 196, 9, 0.4) !important;
+  z-index: 1000 !important;
+}
+
+/* Toast primario (azul) - SOLO el toast, no toda la pantalla */
+ion-toast[color="primary"] {
+  --background: #3880ff !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(56, 128, 255, 0.4) !important;
+  z-index: 1000 !important;
+}
+
+/* ===== FORZAR COLORES Y VISIBILIDAD DE BOTONES ===== */
+
+ion-button[color="success"],
+ion-button.save-button,
+ion-button.add-button {
+  --background: #2dd36f !important;
+  --color: white !important;
+  --border-radius: 50px !important;
+  --background-activated: #28ba62 !important;
+  --background-focused: #28ba62 !important;
+  --background-hover: #28ba62 !important;
+  --color-activated: white !important;
+  --color-focused: white !important;
+  --color-hover: white !important;
+  background-color: #2dd36f !important;
+  color: white !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  height: 56px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  outline: none !important;
+}
+
+ion-button[color="primary"],
+ion-button.edit-button {
+  --background: #3880ff !important;
+  --color: white !important;
+  --border-radius: 18px !important;
+  --background-activated: #3171e0 !important;
+  --background-focused: #3171e0 !important;
+  --background-hover: #3171e0 !important;
+  --color-activated: white !important;
+  --color-focused: white !important;
+  --color-hover: white !important;
+  background-color: #3880ff !important;
+  color: white !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  font-weight: 600 !important;
+  border-radius: 18px !important;
+  border: none !important;
+  outline: none !important;
+}
+
+ion-button[color="danger"],
+ion-button.delete-button {
+  --background: #eb445a !important;
+  --color: white !important;
+  --border-radius: 18px !important;
+  --background-activated: #cf3c4f !important;
+  --background-focused: #cf3c4f !important;
+  --background-hover: #cf3c4f !important;
+  --color-activated: white !important;
+  --color-focused: white !important;
+  --color-hover: white !important;
+  background-color: #eb445a !important;
+  color: white !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  font-weight: 600 !important;
+  border-radius: 18px !important;
+  border: none !important;
+  outline: none !important;
+}
+
+ion-button[color="medium"],
+ion-button.cancel-button {
+  --background: #ff69b4 !important;
+  --color: white !important;
+  --border-radius: 50px !important;
+  --background-activated: #ff1493 !important;
+  --background-focused: #ff1493 !important;
+  --background-hover: #ff1493 !important;
+  --color-activated: white !important;
+  --color-focused: white !important;
+  --color-hover: white !important;
+  background-color: #ff69b4 !important;
+  color: white !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  height: 56px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  border-radius: 50px !important;
+  border: none !important;
+  outline: none !important;
+}
+
 /* ===== SOLUCIÓN GLOBAL PARA LABELS RECORTADOS ===== */
 
 ion-label {
@@ -288,5 +512,235 @@ ion-item ion-label[position="end"] {
     --min-height: 65px !important;
     --padding-top: 8px !important;
     --padding-bottom: 8px !important;
+  }
+}
+
+/* ===== FORZAR VISIBILIDAD DEL BOTÓN DE FECHA ===== */
+
+/* Estilos globales para el botón de fecha */
+.date-picker-button,
+ion-button.date-picker-button {
+  background-color: #3880ff !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  min-height: 44px !important;
+  min-width: 44px !important;
+  margin: 0 !important;
+  z-index: 1000 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  border: 2px solid #3880ff !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+}
+
+.date-picker-button:hover,
+ion-button.date-picker-button:hover {
+  background-color: #3171e0 !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.date-picker-button ion-icon,
+ion-button.date-picker-button ion-icon {
+  font-size: 20px !important;
+  color: white !important;
+  font-weight: bold !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ===== RESPONSIVE DESIGN MEJORADO ===== */
+
+/* Estilos para pantallas pequeñas y zoom 100% */
+@media (max-width: 480px) {
+  ion-content {
+    --padding-start: 4px !important;
+    --padding-end: 4px !important;
+    --padding-top: 4px !important;
+    --padding-bottom: 4px !important;
+  }
+  
+  .main-content {
+    padding: 4px !important;
+  }
+  
+  ion-card {
+    margin: 4px 2px !important;
+  }
+  
+  ion-card-header {
+    padding: 12px !important;
+  }
+  
+  ion-card-content {
+    padding: 12px !important;
+  }
+  
+  ion-title {
+    font-size: 1.5em !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  ion-content {
+    --padding-start: 6px !important;
+    --padding-end: 6px !important;
+    --padding-top: 6px !important;
+    --padding-bottom: 6px !important;
+  }
+  
+  .main-content {
+    padding: 6px !important;
+  }
+  
+  ion-card {
+    margin: 6px 3px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding: 16px !important;
+    max-width: 800px !important;
+  }
+  
+  ion-card {
+    margin: 12px 8px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    max-width: 900px !important;
+  }
+}
+
+/* Estilos específicos para zoom 100% */
+@media screen and (max-resolution: 96dpi) {
+  ion-title {
+    font-size: 1.6em !important;
+  }
+  
+  ion-card-header {
+    padding: 14px !important;
+  }
+  
+  ion-card-content {
+    padding: 14px !important;
+  }
+}
+
+/* ===== ALERTA DE ESTADO ===== */
+
+.status-alert {
+  --background: #2dd36f !important;
+  --color: white !important;
+  --border-radius: 25px !important;
+  --box-shadow: 0 4px 16px rgba(0, 128, 0, 0.4) !important;
+}
+
+.status-alert .alert-wrapper {
+  border-radius: 25px !important;
+  background: #2dd36f !important;
+  color: white !important;
+}
+
+.status-alert .alert-head {
+  background: #28ba62 !important;
+  color: white !important;
+  border-radius: 25px 25px 0 0 !important;
+}
+
+.status-alert .alert-message {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.status-alert .alert-button {
+  color: white !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* ===== RESPONSIVE GLOBAL PARA MÓVILES ===== */
+
+@media (max-width: 480px) {
+  ion-content {
+    --padding-start: 4px !important;
+    --padding-end: 4px !important;
+    --padding-top: 4px !important;
+    --padding-bottom: 4px !important;
+  }
+  
+  ion-card {
+    margin: 6px 2px !important;
+    border-radius: 8px !important;
+  }
+  
+  ion-card-header {
+    padding: 12px !important;
+  }
+  
+  ion-card-content {
+    padding: 12px !important;
+  }
+  
+  ion-item {
+    --padding-start: 8px !important;
+    --padding-end: 8px !important;
+    margin-bottom: 8px !important;
+  }
+  
+  ion-label {
+    font-size: 14px !important;
+  }
+  
+  ion-input,
+  ion-textarea,
+  ion-select {
+    --min-height: 40px !important;
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  ion-content {
+    --padding-start: 2px !important;
+    --padding-end: 2px !important;
+  }
+  
+  ion-card {
+    margin: 4px 1px !important;
+    border-radius: 6px !important;
+  }
+  
+  ion-card-header {
+    padding: 10px !important;
+  }
+  
+  ion-card-content {
+    padding: 10px !important;
+  }
+  
+  ion-item {
+    --padding-start: 6px !important;
+    --padding-end: 6px !important;
+    margin-bottom: 6px !important;
+  }
+  
+  ion-label {
+    font-size: 13px !important;
+  }
+  
+  ion-input,
+  ion-textarea,
+  ion-select {
+    --min-height: 36px !important;
+    font-size: 13px !important;
   }
 }
